@@ -31,26 +31,26 @@ ALTER TABLE ONLY cards
 ALTER TABLE ONLY cards
     ADD CONSTRAINT fk_statuses_id FOREIGN KEY (status_id) REFERENCES statuses (id);
 
-INSERT INTO boards values (1,"Board 1");
-INSERT INTO boards values (2,"Board 2");
+INSERT INTO boards values (1,'Board 1');
+INSERT INTO boards values (2,'Board 2');
 
-INSERT INTO cards values (1,1,"new card 1",0,0);
-INSERT INTO cards values (2,1,"new card 2",0,1);
-INSERT INTO cards values (3,1,"in progress card",1,0);
-INSERT INTO cards values (4,1,"planning",2,0);
-INSERT INTO cards values (5,1,"done card 1",3,0);
-INSERT INTO cards values (6,1,"done card 1",3,1);
-INSERT INTO cards values (7,2,"new card 1",0,0);
-INSERT INTO cards values (8,2,"new card 2",0,1);
-INSERT INTO cards values (9,2,"in progress card",1,0);
-INSERT INTO cards values (10,2,"planning",2,0);
-INSERT INTO cards values (11,2,"done card 1",3,0);
-INSERT INTO cards values (12,2,"done card 1",3,1);
+INSERT INTO cards values (1,1,'new card 1',0,0);
+INSERT INTO cards values (2,1,'new card 2',0,1);
+INSERT INTO cards values (3,1,'in progress card',1,0);
+INSERT INTO cards values (4,1,'planning',2,0);
+INSERT INTO cards values (5,1,'done card 1',3,0);
+INSERT INTO cards values (6,1,'done card 1',3,1);
+INSERT INTO cards values (7,2,'new card 1',0,0);
+INSERT INTO cards values (8,2,'new card 2',0,1);
+INSERT INTO cards values (9,2,'in progress card',1,0);
+INSERT INTO cards values (10,2,'planning',2,0);
+INSERT INTO cards values (11,2,'done card 1',3,0);
+INSERT INTO cards values (12,2,'done card 1',3,1);
 
-INSERT INTO statuses values (0,"new");
-INSERT INTO statuses values (1,"in progress");
-INSERT INTO statuses values (2,"testing");
-INSERT INTO statuses values (3,"done");
+INSERT INTO statuses values (0,'new');
+INSERT INTO statuses values (1,'in progress');
+INSERT INTO statuses values (2,'testing');
+INSERT INTO statuses values (3,'done');
 
 
 
