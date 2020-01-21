@@ -27,6 +27,13 @@ def get_boards():
 def get_statuses():
     return data_handler.get_statuses()
 
+
+@app.route("/get-board/<int:board_id>")
+@json_response
+def get_board_by_id(board_id):
+    return data_handler.get_board(board_id)
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):
