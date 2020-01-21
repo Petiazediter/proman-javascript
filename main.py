@@ -34,6 +34,10 @@ def get_statuses():
 def get_board_by_id(board_id):
     return data_handler.get_board(board_id)
 
+@app.route("/get-cards-in-order/<int:board_id>")
+@json_response
+def get_cards_in_order(board_id):
+    return data_handler.get_cards_in_order(board_id)
 
 @app.route("/get-cards/<int:board_id>")
 @json_response

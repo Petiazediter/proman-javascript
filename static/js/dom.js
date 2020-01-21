@@ -57,8 +57,13 @@ export let dom = {
                     }
 
                     dataHandler.getCardsInOrder(function (cardsInOrder) {
-                        console.log(cardsInOrder)
+                        console.log ( " ============= [ BOARD "+ boardID + " ] =============")
+                        for (let data of cardsInOrder){
+                            console.log(data.array)
+                        }
+                        console.log ( " =======================================")
                     },boardID)
+
 
                 })
             }
