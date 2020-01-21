@@ -52,9 +52,11 @@ def get_statuses(cursor):
 @connection.connection_handler
 def get_cards_in_order(cursor, board_id):
     cursor.execute("""
-    SELECT status_id, array_agg(title) AS array FROM cards
+    SELECT s.title, array_agg(cards.title) AS array FROM cards
+    JOIN statuses s on cards.status_id = s.id
     WHERE board_id = %(board_id)s
-    GROUP BY status_id;
+    GROUP BY s.title, s.id
+    ORDER BY s.id;
     """,
                    {"board_id":board_id})
 
