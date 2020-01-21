@@ -31,6 +31,7 @@ export let dom = {
 
     drawBoard: function (board) {
         let boardsContainer = document.querySelector('#boards');
+        boardsContainer.classList.add("board-container");
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
@@ -38,7 +39,7 @@ export let dom = {
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
-            </section>`
+            </section>`;
 
         dom.showStatusesOfBoard(board.id);
     },
@@ -64,7 +65,7 @@ export let dom = {
                                 div.setAttribute("class", "card");
                                 const titleDiv = document.createElement("div");
                                 titleDiv.setAttribute("class", "card-title");
-                                titleDiv.innerHTML = data.title
+                                titleDiv.innerHTML = data.title;
                                 container.appendChild(div);
                                 div.appendChild(titleDiv);
                             }
