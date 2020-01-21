@@ -90,7 +90,7 @@ def create_new_card(cursor, board_id, title, status_id, order):
 
     return True
 
-connection.connection_handler
+@connection.connection_handler
 def get_column_order_lentgh(cursor, board_id, status_id):
     cursor.execute("""
     SELECT COUNT(id)
