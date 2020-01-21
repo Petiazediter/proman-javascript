@@ -13,35 +13,13 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
+
     showBoards: function (boards) {
-        // shows boards appending them to #boards div
-        // it adds necessary event listeners also
-        /*
-        let boardList = '';
-
-        for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
-        }
-
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `; */
-
-
-
-
         for (let board of boards){
             dom.drawBoard(board);
         }
-
-
-
-        //boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
+
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
     },
@@ -62,14 +40,23 @@ export let dom = {
                 </div>
             </section>`
 
-        dom.showCardsOfBoard(board.id);
+        dom.showStatusesOfBoard(board.id);
     },
 
-    showCardsOfBoard : function (boardID) {
+    showStatusesOfBoard : function (boardID) {
         const boards = document.getElementsByClassName('board');
         for (let board of boards){
             if ( board.dataset.id == boardID){
                 board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`
+                dataHandler.getStatuses(function (statuses) {
+                    for ( let status of statuses){
+                        document.getElementById(`columns-${boardID}`).innerHTML += `
+                            <div class="board-column">
+                                <div class="board-column-title">${status.title}</div>
+                            </div>         `
+                    }
+
+                })
             }
         }
     },
