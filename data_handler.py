@@ -61,3 +61,16 @@ def get_cards_in_order(cursor, board_id):
 
     cards_in_order = cursor.fetchall()
     return cards_in_order
+
+@connection.connection_handler
+def get_board(cursor, board_id):
+    cursor.execute("""
+    SELECT *
+    FROM boards
+    WHERE id = %(board_id)s
+    """, {
+        "board_id": board_id
+    })
+
+    board = cursor.fetchone()
+    return board
