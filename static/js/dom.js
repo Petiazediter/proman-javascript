@@ -56,6 +56,10 @@ export let dom = {
                             </div>         `
                     }
 
+                    dataHandler.getCardsInOrder(function (cardsInOrder) {
+                        console.log(cardsInOrder)
+                    },boardID)
+
                 })
             }
         }

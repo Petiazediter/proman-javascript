@@ -47,3 +47,30 @@ def get_statuses(cursor):
 
     statuses = cursor.fetchall()
     return statuses
+
+
+@connection.connection_handler
+def get_cards_in_order(cursor, board_id):
+    cursor.execute("""
+    SELECT * FROM cards
+    WHERE board_id = %(board_id)s
+    GROUP BY status_id
+    ORDER BY 'order';
+    """,
+                   {"board_id":board_id})
+
+    cards_in_order = cursor.fetchall()
+    return cards_in_order
+
+@connection.connection_handler
+def get_board(cursor, board_id):
+    cursor.execute("""
+    SELECT *
+    FROM boards
+    WHERE id = %(board_id)s
+    """, {
+        "board_id": board_id
+    })
+
+    board = cursor.fetchone()
+    return board
