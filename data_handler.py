@@ -52,15 +52,15 @@ def get_statuses(cursor):
 @connection.connection_handler
 def get_cards_in_order(cursor, board_id):
     cursor.execute("""
-    SELECT * FROM cards
+    SELECT status_id, array_agg(title) FROM cards
     WHERE board_id = %(board_id)s
-    GROUP BY status_id
-    ORDER BY 'order';
+    GROUP BY status_id;
     """,
                    {"board_id":board_id})
 
     cards_in_order = cursor.fetchall()
     return cards_in_order
+
 
 @connection.connection_handler
 def get_board(cursor, board_id):
@@ -74,3 +74,31 @@ def get_board(cursor, board_id):
 
     board = cursor.fetchone()
     return board
+
+
+@connection.connection_handler
+def create_new_card(cursor, board_id, title, status_id, order):
+    cursor.execute("""
+    INSERT INTO cards(board_id, title, status_id, order)
+    VALUES (%(board_id)s, %(title)s, %(status_id)s, %(order)s)
+    """, {
+        "board_id": board_id,
+        "title": title,
+        "status_id": status_id,
+        "order": order
+    })
+
+    return True
+
+@connection.connection_handler
+def get_column_order_lentgh(cursor, board_id, status_id):
+    cursor.execute("""
+    SELECT COUNT(id)
+    FROM cards
+    WHERE board_id = %(board_id)s AND status_id = %(status_id)s
+    """, {
+        "board_id": board_id,
+        "status_id": status_id
+    })
+    result = cursor.fetchone()
+    return result
