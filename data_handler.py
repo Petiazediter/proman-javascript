@@ -74,3 +74,31 @@ def get_board(cursor, board_id):
 
     board = cursor.fetchone()
     return board
+
+
+@connection.connection_handler
+def create_new_card(cursor, board_id, title, status_id, order):
+    cursor.execute("""
+    INSERT INTO cards(board_id, title, status_id, order)
+    VALUES (%(board_id)s, %(title)s, %(status_id)s, %(order)s)
+    """, {
+        "board_id": board_id,
+        "title": title,
+        "status_id": status_id,
+        "order": order
+    })
+
+    return True
+
+@connection.connection_handler
+def get_column_order_lentgh(cursor, board_id, status_id):
+    cursor.execute("""
+    SELECT COUNT(id)
+    FROM cards
+    WHERE board_id = %(board_id)s AND status_id = %(status_id)s
+    """, {
+        "board_id": board_id,
+        "status_id": status_id
+    })
+    result = cursor.fetchone()
+    return result

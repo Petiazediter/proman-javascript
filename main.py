@@ -22,6 +22,7 @@ def get_boards():
     """
     return data_handler.get_boards()
 
+
 @app.route("/get-statuses")
 @json_response
 def get_statuses():
@@ -42,6 +43,13 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/create-new-card", methods=['GET', 'POST'])
+def create_new_card(body):
+    order = data_handler.get_column_order_lentgh(body["board_id"], body["status_id"])
+    data_handler.create_new_card(body["board_id"], body["title"], body["status_id"], order)
+    return True
 
 
 def main():
