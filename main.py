@@ -47,7 +47,7 @@ def get_cards_for_board(board_id: int):
 
 @app.route("/create-new-card", methods=['GET', 'POST'])
 def create_new_card(body):
-    order = data_handler.get_column_order_lentgh(body["board_id"], body["status_id"])
+    order = data_handler.get_column_order_length(body["board_id"], body["status_id"])
     data_handler.create_new_card(body["board_id"], body["title"], body["status_id"], order)
     return True
 
