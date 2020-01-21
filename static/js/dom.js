@@ -47,22 +47,32 @@ export let dom = {
         const boards = document.getElementsByClassName('board');
         for (let board of boards){
             if ( board.dataset.id == boardID){
-                board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`
+                board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`;
                 dataHandler.getStatuses(function (statuses) {
                     for ( let status of statuses){
                         document.getElementById(`columns-${boardID}`).innerHTML += `
+
                             <div class="board-column">
                                 <div class="board-column-title">${status.title}</div>
-                            </div>         `
+                                <div class="board-column-content" id="bcc-${status.id}-${boardID}"></div>
+                            </div>      `;
+
+                        dataHandler.getCardsInOrder(function (cardsInOrder) {
+                            const container = document.getElementById(`bcc-${status.id}-${boardID}`);
+                            for (let data of cardsInOrder){
+                                const div = document.createElement("div");
+                                div.setAttribute("class", "card");
+                                const titleDiv = document.createElement("div");
+                                titleDiv.setAttribute("class", "card-title");
+                                titleDiv.innerHTML = data.title
+                                container.appendChild(div);
+                                div.appendChild(titleDiv);
+                            }
+
+                        },boardID, status.id)
                     }
 
-                    dataHandler.getCardsInOrder(function (cardsInOrder) {
-                        console.log ( " ============= [ BOARD "+ boardID + " ] =============")
-                        for (let data of cardsInOrder){
-                            console.log(data)
-                        }
-                        console.log ( " =======================================")
-                    },boardID,1)
+
 
 
                 })
