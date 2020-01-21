@@ -51,8 +51,8 @@ export let dataHandler = {
             callback(response);
         });
     },
-    getCardsInOrder: function(callback,boardID){
-        this._api_get('/get-cards-in-order/' + boardID, (response) =>{
+    getCardsInOrder: function(callback,board_id, status_id){
+        this._api_get(`/get-cards-by-status/${board_id}/${status_id}`, (response) =>{
             this._data = response;
             callback(response);
         })
