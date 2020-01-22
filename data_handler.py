@@ -115,3 +115,26 @@ def get_cards_by_status(cursor, board_id, status_id):
         ORDER BY "order";
     """, {"id": board_id, "status_id": status_id})
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_board_count(cursor):
+    cursor.execute("""
+    SELECT count(id) FROM boards;
+    """)
+    next_one = cursor.fetchone() + 1
+    return next_one
+
+
+@connection.connection_handler
+def create_new_board(cursor, next_one):
+    new_name = "(new) Board %s" % next_one
+    cursor.execute("""
+    INSERT INTO boards(title)
+    VALUES (%(title)s);
+    """,
+                   {"title": new_name})
+
+
+
+
