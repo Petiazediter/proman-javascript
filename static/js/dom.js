@@ -87,21 +87,15 @@ export let dom = {
 
     createCardFunction: function () {
         let allBoardAdds = document.querySelectorAll(".board-add");
-        console.log(allBoardAdds);
         for (let board of allBoardAdds) {
             let boardId = board.dataset.id;
 
             function createCard() {
-                console.log("event" + boardId);
                 dataHandler.createNewCard("new_card", `${boardId}`, 0, function () {
-                    console.log("card written")
+                    //callback function goes here
                 })
             }
-
             board.addEventListener("click", createCard);
-            console.log("event added " +board);
-
-
         }
     },
 
