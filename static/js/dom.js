@@ -42,6 +42,7 @@ export let dom = {
             </section>`;
 
         dom.showStatusesOfBoard(board.id);
+        dom.createCardFunction();
     },
 
     showStatusesOfBoard : function (boardID) {
@@ -50,13 +51,12 @@ export let dom = {
             if ( board.dataset.id == boardID){
                 board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`;
                 dataHandler.getStatuses(function (statuses) {
-                    for ( let status of statuses){
+                    for (let status of statuses){
                         document.getElementById(`columns-${boardID}`).innerHTML += `
-
                             <div class="board-column">
                                 <div class="board-column-title">${status.title}</div>
                                 <div class="board-column-content" id="bcc-${status.id}-${boardID}"></div>
-                            </div>      `;
+                            </div>`;
 
                         dataHandler.getCardsInOrder(function (cardsInOrder) {
                             const container = document.getElementById(`bcc-${status.id}-${boardID}`);
@@ -75,11 +75,47 @@ export let dom = {
                                     dataHandler.renameCard(data.id, value);
                                 }
                             }
-
                         },boardID, status.id)
                     }
-                })
+                });
+
+
+
             }
         }
     },
-};
+
+    createCardFunction: function () {
+        let allBoardAdds = document.querySelectorAll(".board-add");
+        console.log(allBoardAdds);
+        for (let board of allBoardAdds) {
+            let boardId = board.dataset.id;
+
+            function createCard() {
+                console.log("event" + boardId);
+                dataHandler.createNewCard("new_card", `${boardId}`, 0, function () {
+                    console.log("card written")
+                })
+            }
+
+            board.addEventListener("click", createCard);
+            console.log("event added " +board);
+
+
+        }
+    },
+
+
+}
+
+
+
+                /*let actualBoard = document.querySelector(`#board-add-${boardID}`);
+                actualBoard.addEventListener("click", createCard);
+                console.log("event handler added");
+
+                function createCard(boardId) {
+                    dataHandler.createNewCard("new_card", `${boardId}`, 0, function(status) {
+                        console.log("new data added");
+                    })
+                }*/
