@@ -23,15 +23,15 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/design")
+def design():
+    return render_template("design.html")
+
+
 @app.route("/get-statuses")
 @json_response
 def get_statuses():
     return data_handler.get_statuses()
-
-
-@app.route('/design')
-def des():
-    return render_template('design.html')
 
 
 @app.route("/get-board/<int:board_id>")
@@ -70,6 +70,12 @@ def rename_card(id,name):
     name = name.replace('_', ' ')
     data_handler.rename_card(id,name)
     return {}
+
+
+@app.route('/delete-card/<int:id>')
+@json_response
+def delet_this_card(id):
+    data_handler.delete_card_by_id(id)
 
 
 @app.route('/rename-board/board-<int:id>/text-<name>')

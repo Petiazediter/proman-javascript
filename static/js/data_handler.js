@@ -83,9 +83,12 @@ export let dataHandler = {
         fetch(`http://127.0.0.1:5000/rename-card/card-${cardID}/text-${newName}`)
     },
     renameBoard: function (boardID,newName) {
-        console.log('ASD')
         newName = newName.split(' ').join('_');
         fetch(`http://127.0.0.1:5000/rename-board/board-${boardID}/text-${newName}`)
+    },
+    removeCard: function (cardID, callback) {
+        fetch(`http://127.0.0.1:5000/delete-card/${cardID}`)
+            .then(response => callback(response));
     }
     // here comes more features
 };

@@ -42,31 +42,11 @@ export let dom = {
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
-                    <span class="board-title" data-id = ${board.id}></span>
+                    <span class="board-title" data-id = ${board.id}><input type="text" value="${board.title}" class="boardName" id="board-title-${board.id}" data-boardId="${board.id}"></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
-
-        let container;
-        for ( let element of document.getElementsByClassName('board-title')){
-            if (element.dataset.id === `${board.id}`){
-                container = element;
-            }
-        }
-
-        const textBox = document.createElement('input');
-        //<input type="text" value="${board.title}" class="boardName" data-id="${board.id}">
-        textBox.setAttribute('class','boardName');
-        textBox.setAttribute('value',board.title);
-        textBox.dataset.id = board.id;
-        textBox.onchange = function () {
-            console.log('S');
-            let value = this.value;
-            dataHandler.renameBoard(board.id, value);
-        };
-        container.appendChild(textBox);
-
         dom.showStatusesOfBoard(board.id);
         dom.createCardFunction();
     },
@@ -104,9 +84,26 @@ export let dom = {
                 title_input.setAttribute( "value",data.title);
                 container.appendChild(div);
                 div.appendChild(titleDiv);
+                //<div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                const delete_div = document.createElement('div');
+                delete_div.setAttribute('class','card-remove');
+                const _i = document.createElement('i');
+                _i.setAttribute('class', 'fas fa-trash-alt');
+                delete_div.setAttribute("data-card-id", data.id);
+                delete_div.addEventListener("click", deleteThisCard);
+                delete_div.appendChild(_i);
+                div.appendChild(delete_div);
+
                 title_input.onchange = function () {
                     let value = this.value;
                     dataHandler.renameCard(data.id, value);
+                };
+
+                function deleteThisCard() {
+                    let card_id = this.dataset.cardId;
+                    dataHandler.removeCard(card_id, function () {
+                        dom.loadCardsInStatus(data.board_id, status)
+                    });
                 }
             }
         },boardID, status.id)
@@ -143,4 +140,16 @@ export let dom = {
     // here comes the new dom objects
 
 };
+
+setTimeout(function () {
+    let elements = document.getElementsByClassName('boardName');
+    for (let element of elements){
+        element.onchange = function () {
+            let value = this.value;
+            dataHandler.renameBoard(this.dataset.boardid, value);
+        }
+    }
+},1000)
+
+
 
