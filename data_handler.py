@@ -123,3 +123,14 @@ def get_cards_by_status(cursor, board_id, status_id):
         ORDER BY "order";
     """, {"id": board_id, "status_id": status_id})
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def delete_card_by_id(cursor, card_id):
+    cursor.execute("""
+        DELETE FROM cards
+        WHERE id = %(card_id)s
+    """, {
+        "card_id": card_id
+    })
+    return True
