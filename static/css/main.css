@@ -16,6 +16,15 @@ h1, .board-title, .board-column-title{
     font-weight: 100;
 }
 
+.boardName{
+    font-family: sans-serif;
+    color: black;
+    font-weight: 100;
+    font-size: large;
+    width: 100px;
+    text-decoration: ;
+}
+
 h1{
     text-align: center;
     font-size: 4em;
@@ -76,6 +85,13 @@ section.board{
 
 .board-column-content{
     min-height: 49px;
+}
+
+input{
+    background: none;
+    width:100%;
+    color: white;
+    border: none;
 }
 
 .board-column-content:empty{

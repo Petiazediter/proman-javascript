@@ -35,8 +35,8 @@ export let dom = {
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
-                    <span class="board-title">${board.title}</span>
-                    <button id="board-add-${board.id}" class="board-add" data-id = ${board.id}>Add Card</button>
+                    <span class="board-title"><input type="text" value="${board.title}" class="boardName" data-id="${board.id}"></span>
+                    <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
@@ -48,9 +48,8 @@ export let dom = {
     showStatusesOfBoard : function (boardID) {
         const boards = document.getElementsByClassName('board');
         for (let board of boards){
-            if (board.dataset.id == boardID){
-                board.innerHTML += `<div class="board-columns"  id="columns-${boardID}"></div>`;
-                
+            if ( board.dataset.id == boardID){
+                board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`;
                 dataHandler.getStatuses(function (statuses) {
                     for (let status of statuses){
                         document.getElementById(`columns-${boardID}`).innerHTML += `
@@ -66,9 +65,15 @@ export let dom = {
                                 div.setAttribute("class", "card");
                                 const titleDiv = document.createElement("div");
                                 titleDiv.setAttribute("class", "card-title");
-                                titleDiv.innerHTML = data.title;
+                                const title_input = document.createElement('input');
+                                titleDiv.appendChild(title_input);
+                                title_input.setAttribute( "value",data.title);
                                 container.appendChild(div);
                                 div.appendChild(titleDiv);
+                                title_input.onchange = function () {
+                                    let value = this.value;
+                                    dataHandler.renameCard(data.id, value);
+                                }
                             }
                         },boardID, status.id)
                     }
