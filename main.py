@@ -32,9 +32,6 @@ def design():
 def get_statuses():
     return data_handler.get_statuses()
 
-@app.route('/design')
-def des():
-    return render_template('design.html')
 
 @app.route("/get-board/<int:board_id>")
 @json_response
@@ -70,6 +67,13 @@ def create_new_card(board_id, status_id, card_title):
 def rename_card(id,name):
     name = name.replace('_', ' ')
     data_handler.rename_card(id,name)
+    return {}
+
+@app.route('/rename-board/board-<int:id>/text-<name>')
+@json_response
+def rename_board(id,name):
+    name = name.replace('_', ' ')
+    data_handler.rename_board(id,name)
     return {}
 
 def main():

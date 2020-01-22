@@ -35,11 +35,30 @@ export let dom = {
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
-                    <span class="board-title"><input type="text" value="${board.title}" class="boardName" data-id="${board.id}"></span>
+                    <span class="board-title" data-id = ${board.id}></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
+
+        let container;
+        for ( let element of document.getElementsByClassName('board-title')){
+            if (element.dataset.id === `${board.id}`){
+                container = element;
+            }
+        }
+
+        const textBox = document.createElement('input');
+        //<input type="text" value="${board.title}" class="boardName" data-id="${board.id}">
+        textBox.setAttribute('class','boardName');
+        textBox.setAttribute('value',board.title);
+        textBox.dataset.id = board.id;
+        textBox.onchange = function () {
+            console.log('S');
+            let value = this.value;
+            dataHandler.renameBoard(board.id, value);
+        };
+        container.appendChild(textBox);
 
         dom.showStatusesOfBoard(board.id);
         dom.createCardFunction();
@@ -67,6 +86,7 @@ export let dom = {
     loadCardsInStatus: function (boardID,status){
         dataHandler.getCardsInOrder(function (cardsInOrder) {
             const container = document.getElementById(`bcc-${status.id}-${boardID}`);
+            container.innerHTML = "";
             for (let data of cardsInOrder){
                 const div = document.createElement("div");
                 div.setAttribute("class", "card");
@@ -87,35 +107,18 @@ export let dom = {
 
     createCardFunction: function () {
         let allBoardAdds = document.querySelectorAll(".board-add");
-        console.log(allBoardAdds);
         for (let board of allBoardAdds) {
             let boardId = board.dataset.id;
 
             function createCard() {
-                console.log("event" + boardId);
                 dataHandler.createNewCard("new_card", `${boardId}`, 0, function () {
-                    console.log("card written")
+                    dom.loadCardsInStatus(`${boardId}`,{'id':0})
                 })
             }
-
             board.addEventListener("click", createCard);
-            console.log("event added " +board);
-
-
         }
     },
 
 
 }
 
-
-
-                /*let actualBoard = document.querySelector(`#board-add-${boardID}`);
-                actualBoard.addEventListener("click", createCard);
-                console.log("event handler added");
-
-                function createCard(boardId) {
-                    dataHandler.createNewCard("new_card", `${boardId}`, 0, function(status) {
-                        console.log("new data added");
-                    })
-                }*/
