@@ -35,7 +35,7 @@ export let dom = {
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
-                    <span class="board-title">${board.title}</span>
+                    <span class="board-title"><input type="text" value="${board.title}" class="boardName" data-id="${board.id}"></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
@@ -68,10 +68,12 @@ export let dom = {
                                 const title_input = document.createElement('input');
                                 titleDiv.appendChild(title_input);
                                 title_input.setAttribute( "value",data.title);
-                                //title_input.setAttribute('class', 'board-column-content');
-                                //titleDiv.innerHTML = data.title;
                                 container.appendChild(div);
                                 div.appendChild(titleDiv);
+                                title_input.onchange = function () {
+                                    let value = this.value;
+                                    dataHandler.renameCard(data.id, value);
+                                }
                             }
 
                         },boardID, status.id)

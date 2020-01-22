@@ -63,6 +63,10 @@ def get_cards_in_order(cursor, board_id):
     cards_in_order = cursor.fetchall()
     return cards_in_order
 
+@connection.connection_handler
+def rename_card(cursor,id,name):
+    cursor.execute("""UPDATE cards SET title = %(new_name)s  WHERE id = %(id)s""",{"new_name":name, 'id':id})
+
 
 @connection.connection_handler
 def get_board(cursor, board_id):

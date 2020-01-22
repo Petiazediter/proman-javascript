@@ -60,6 +60,12 @@ def create_new_card(body):
     data_handler.create_new_card(body["board_id"], body["title"], body["status_id"], order)
     return True
 
+@app.route('/rename-card/card-<int:id>/text-<name>')
+@json_response
+def rename_card(id,name):
+    name = name.replace('_', ' ')
+    data_handler.rename_card(id,name)
+    return {}
 
 def main():
     app.run(debug=True)
