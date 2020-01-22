@@ -50,6 +50,7 @@ export let dom = {
 
         dom.showStatusesOfBoard(board.id);
         dom.createCardFunction();
+        dom.createBoardFunction();
 
         console.log(board.id)
         let inter = setTimeout(function () {
@@ -141,18 +142,10 @@ export let dom = {
     },
 
     createBoardFunction: function () {
-        const boardCount = document.querySelectorAll(".board");
-        let counter = 0;
-        for (let boardNumber of boardCount) {
-            counter += 1;
-        }
-
-        const newBoardID = counter + 1;
-        const newBoardTitle = `(new) Board ${newBoardID}`;
 
         function createBoard() {
-            dataHandler.createNewBoard(newBoardID,newBoardTitle,function (parameter) {
-                dom.loadBoards()
+            dataHandler.createNewBoard(function (parameter) {
+                dom.loadBoards();
             })
         }
 

@@ -66,9 +66,9 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (boardID, boardTitle, callback) {
+    createNewBoard: function (callback) {
         // creates new board, saves it and calls the callback function with its data
-        fetch(`http://127.0.0.1:5000/create-new-board/${boardID}/${boardTitle}`)
+        fetch(`http://127.0.0.1:5000/create-new-board/`)
         .then(response => callback(response));
     },
     createNewCard: function (cardTitle, boardId, statusId,callback) {

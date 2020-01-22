@@ -86,7 +86,7 @@ def rename_board(id,name):
     return {}
 
 
-@app.route("/create-new-board")
+@app.route("/create-new-board/")
 @json_response
 def create_new_board():
     next_board = data_handler.get_board_count + 1
