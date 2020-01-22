@@ -28,9 +28,11 @@ def get_boards():
 def get_statuses():
     return data_handler.get_statuses()
 
+
 @app.route('/design')
 def des():
     return render_template('design.html')
+
 
 @app.route("/get-board/<int:board_id>")
 @json_response
@@ -59,6 +61,13 @@ def create_new_card(body):
     order = data_handler.get_column_order_length(body["board_id"], body["status_id"])
     data_handler.create_new_card(body["board_id"], body["title"], body["status_id"], order)
     return True
+
+
+@app.route("/create-new-board", methods=['GET', 'POST'])
+@json_response
+def create_new_board():
+    next_board = data_handler.get_board_count + 1
+    data_handler.create_new_board(next_board)
 
 
 def main():

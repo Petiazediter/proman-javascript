@@ -122,8 +122,8 @@ def get_board_count(cursor):
     cursor.execute("""
     SELECT count(id) FROM boards;
     """)
-    next_one = cursor.fetchone() + 1
-    return next_one
+    board_count = cursor.fetchone()
+    return board_count
 
 
 @connection.connection_handler
