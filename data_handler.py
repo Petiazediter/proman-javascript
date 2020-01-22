@@ -81,8 +81,8 @@ def get_board(cursor, board_id):
 @connection.connection_handler
 def create_new_card(cursor, board_id, title, status_id, order):
     cursor.execute("""
-    INSERT INTO cards(board_id, title, status_id, order)
-    VALUES (%(board_id)s, %(title)s, %(status_id)s, %(order)s)
+    INSERT INTO cards(id, board_id, title, status_id, "order")
+    VALUES (DEFAULT, %(board_id)s, %(title)s, %(status_id)s, %(order)s)
     """, {
         "board_id": board_id,
         "title": title,
