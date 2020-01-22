@@ -67,6 +67,7 @@ INSERT INTO cards values (11,2,'done card 1',3,0);
 INSERT INTO cards values (12,2,'done card 1',3,1);
 
 
-
-
+SELECT pg_catalog.setval('boards_id_seq', 2, true);
+SELECT pg_catalog.setval('statuses_id_seq', 3, true);
+SELECT pg_catalog.setval('cards_id_seq', 12, true);
 
