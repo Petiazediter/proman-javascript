@@ -67,6 +67,7 @@ export let dom = {
     loadCardsInStatus: function (boardID,status){
         dataHandler.getCardsInOrder(function (cardsInOrder) {
             const container = document.getElementById(`bcc-${status.id}-${boardID}`);
+            container.innerHTML = "";
             for (let data of cardsInOrder){
                 const div = document.createElement("div");
                 div.setAttribute("class", "card");
@@ -91,8 +92,9 @@ export let dom = {
             let boardId = board.dataset.id;
 
             function createCard() {
-                dataHandler.createNewCard("new_card", `${boardId}`, 0, function () {
-                    //callback function goes here
+                dataHandler.createNewCard("new_card", `${boardId}`, 0, function(parameter) {
+                    console.log(parameter);
+                    dom.loadCardsInStatus(`${boardId}`, {"id": 0});
                 })
             }
             board.addEventListener("click", createCard);

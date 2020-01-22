@@ -72,7 +72,11 @@ export let dataHandler = {
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
 
-        fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`);
+        fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`)
+        .then(response => callback(response));
+
+
+
         console.log(`create-new-card/${boardId}/${statusId}/${cardTitle}`)
         //let dataBody = {cardTitle, boardId, statusId};
         /*this._api_post(`/create-new-card/`, dataBody, (response) => {
