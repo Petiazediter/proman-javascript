@@ -75,16 +75,22 @@ export let dataHandler = {
         fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`)
         .then(response => callback(response));
     },
-    renameCard: function (cardID,newName) {
-        newName = newName.split(' ').join('_');
-        //console.log(`/rename-card/card-${cardID}/text-${newName}`);
-        fetch(`http://127.0.0.1:5000/rename-card/card-${cardID}/text-${newName}`)
+    renameCard: function (cardID,newName,callback) {
+        if (newName == ''){newName = " "}
+         this._api_get(`/rename-card/card-${cardID}/text-${newName}/`, (response) =>{
+            this._data = response;
+            callback(response);
+        })
     },
-    renameBoard: function (boardID,newName) {
-        newName = newName.split(' ').join('_');
-        fetch(`http://127.0.0.1:5000/rename-board/board-${boardID}/text-${newName}`)
+    renameBoard: function (boardID,newName,callback) {
+        if (newName == ''){newName = " "}
+        this._api_get(`/rename-board/board-${boardID}/text-${newName}/`, (response) =>{
+            this._data = response;
+            callback(response);
+        })
     },
     removeCard: function (cardID, callback) {
+
         fetch(`http://127.0.0.1:5000/delete-card/${cardID}`)
             .then(response => callback(response));
     }

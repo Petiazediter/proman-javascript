@@ -65,12 +65,26 @@ def get_cards_in_order(cursor, board_id):
 
 @connection.connection_handler
 def rename_card(cursor,id,name):
+    name = disableEmptyString(name, "Untitled " + str(id))
     cursor.execute("""UPDATE cards SET title = %(new_name)s  WHERE id = %(id)s""",{"new_name":name, 'id':id})
+    cursor.execute("""SELECT * FROM cards WHERE id = %(id)s""",{'id':id})
+    data = cursor.fetchone()
+    return data
 
 @connection.connection_handler
 def rename_board(cursor,id,name):
+    name = disableEmptyString(name, "Untitled " + str(id))
     cursor.execute("""UPDATE boards SET title = %(new_name)s  WHERE id = %(id)s""",{"new_name":name, 'id':id})
+    cursor.execute("""SELECT * FROM boards WHERE id = %(id)s""",{'id':id})
+    data = cursor.fetchone()
+    return data
 
+def disableEmptyString(name,default):
+    name = str(name)
+    replaced = name.replace(" ", "")
+    if (replaced == ""):
+        return default
+    return name
 
 @connection.connection_handler
 def get_board(cursor, board_id):

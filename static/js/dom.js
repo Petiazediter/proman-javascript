@@ -91,6 +91,7 @@ export let dom = {
                 const titleDiv = document.createElement("div");
                 titleDiv.setAttribute("class", "card-title");
                 const title_input = document.createElement('input');
+                title_input.setAttribute('id', `card-id-${data.id}`);
                 titleDiv.appendChild(title_input);
                 title_input.setAttribute( "value",data.title);
                 container.appendChild(div);
@@ -106,7 +107,10 @@ export let dom = {
                 div.appendChild(delete_div);
                 title_input.onchange = function () {
                     let value = this.value;
-                    dataHandler.renameCard(data.id, value);
+                    dataHandler.renameCard(data.id, value,function (data) {
+                        const element = document.getElementById(`card-id-${data.id}`)
+                        element.value = data.title
+                    });
                 };
 
                 function deleteThisCard() {
@@ -141,7 +145,13 @@ setTimeout(function () {
     for (let element of elements){
         element.onchange = function () {
             let value = this.value;
-            dataHandler.renameBoard(this.dataset.boardid, value);
+            dataHandler.renameBoard(this.dataset.boardid, value, function (board) {
+                //console.log(board)
+                //console.log(board)
+                let element = document.getElementById(`board-title-${board.id}`);
+                element.value = board.title
+                //console.log('jee ' + board.title)
+            });
         }
     }
 },1000)
