@@ -93,7 +93,6 @@ export let dom = {
 
             function createCard() {
                 dataHandler.createNewCard("new_card", `${boardId}`, 0, function(parameter) {
-                    console.log(parameter);
                     dom.loadCardsInStatus(`${boardId}`, {"id": 0});
                 })
             }

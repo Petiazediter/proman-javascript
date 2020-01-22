@@ -74,16 +74,6 @@ export let dataHandler = {
 
         fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`)
         .then(response => callback(response));
-
-
-
-        console.log(`create-new-card/${boardId}/${statusId}/${cardTitle}`)
-        //let dataBody = {cardTitle, boardId, statusId};
-        /*this._api_post(`/create-new-card/`, dataBody, (response) => {
-            this._data = response;
-            callback(response);
-        });*/
-
     },
     renameCard: function (cardID,newName) {
         newName = newName.split(' ').join('_');
