@@ -57,32 +57,32 @@ export let dom = {
                                 <div class="board-column-title">${status.title}</div>
                                 <div class="board-column-content" id="bcc-${status.id}-${boardID}"></div>
                             </div>`;
-
-                        dataHandler.getCardsInOrder(function (cardsInOrder) {
-                            const container = document.getElementById(`bcc-${status.id}-${boardID}`);
-                            for (let data of cardsInOrder){
-                                const div = document.createElement("div");
-                                div.setAttribute("class", "card");
-                                const titleDiv = document.createElement("div");
-                                titleDiv.setAttribute("class", "card-title");
-                                const title_input = document.createElement('input');
-                                titleDiv.appendChild(title_input);
-                                title_input.setAttribute( "value",data.title);
-                                container.appendChild(div);
-                                div.appendChild(titleDiv);
-                                title_input.onchange = function () {
-                                    let value = this.value;
-                                    dataHandler.renameCard(data.id, value);
-                                }
-                            }
-                        },boardID, status.id)
+                        dom.loadCardsInStatus(boardID,status);
                     }
                 });
-
-
-
             }
         }
+    },
+
+    loadCardsInStatus: function (boardID,status){
+        dataHandler.getCardsInOrder(function (cardsInOrder) {
+            const container = document.getElementById(`bcc-${status.id}-${boardID}`);
+            for (let data of cardsInOrder){
+                const div = document.createElement("div");
+                div.setAttribute("class", "card");
+                const titleDiv = document.createElement("div");
+                titleDiv.setAttribute("class", "card-title");
+                const title_input = document.createElement('input');
+                titleDiv.appendChild(title_input);
+                title_input.setAttribute( "value",data.title);
+                container.appendChild(div);
+                div.appendChild(titleDiv);
+                title_input.onchange = function () {
+                    let value = this.value;
+                    dataHandler.renameCard(data.id, value);
+                }
+            }
+        },boardID, status.id)
     },
 
     createCardFunction: function () {
