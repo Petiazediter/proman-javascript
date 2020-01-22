@@ -65,17 +65,17 @@ export let dom = {
                                 div.setAttribute("class", "card");
                                 const titleDiv = document.createElement("div");
                                 titleDiv.setAttribute("class", "card-title");
-                                titleDiv.innerHTML = data.title;
+                                const title_input = document.createElement('input');
+                                titleDiv.appendChild(title_input);
+                                title_input.setAttribute( "value",data.title);
+                                //title_input.setAttribute('class', 'board-column-content');
+                                //titleDiv.innerHTML = data.title;
                                 container.appendChild(div);
                                 div.appendChild(titleDiv);
                             }
 
                         },boardID, status.id)
                     }
-
-
-
-
                 })
             }
         }

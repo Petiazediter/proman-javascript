@@ -28,6 +28,9 @@ def get_boards():
 def get_statuses():
     return data_handler.get_statuses()
 
+@app.route('/design')
+def des():
+    return render_template('design.html')
 
 @app.route("/get-board/<int:board_id>")
 @json_response
