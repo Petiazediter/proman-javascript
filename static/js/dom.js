@@ -44,13 +44,31 @@ export let dom = {
                 <div class="board-header" data-id = ${board.id}>
                     <span class="board-title" data-id = ${board.id}><input type="text" value="${board.title}" class="boardName" id="board-title-${board.id}" data-boardId="${board.id}"></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
-                    <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
+                    <button class="board-toggle" id="board-toggle-${board.id}" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
+
         dom.showStatusesOfBoard(board.id);
         dom.createCardFunction();
-    },
 
+        console.log(board.id)
+        let inter = setTimeout(function () {
+            document.getElementById(`board-toggle-${board.id}`).addEventListener('click',function () {
+                dom.showHide(this)
+            })
+        },1000)
+
+    },
+    showHide : function(board){
+        const boardID = board.dataset.id
+        const element = document.getElementById(`columns-${boardID}`)
+        if ( element.style.display == 'none' ){
+            element.style.display = ''
+            //dom.showStatusesOfBoard(boardID)
+        }else{
+            element.style.display = 'none'
+        }
+    },
     showStatusesOfBoard : function (boardID) {
         const boards = document.getElementsByClassName('board');
         for (let board of boards){
@@ -93,7 +111,6 @@ export let dom = {
                 delete_div.addEventListener("click", deleteThisCard);
                 delete_div.appendChild(_i);
                 div.appendChild(delete_div);
-
                 title_input.onchange = function () {
                     let value = this.value;
                     dataHandler.renameCard(data.id, value);
