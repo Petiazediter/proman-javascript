@@ -124,16 +124,23 @@ export let dom = {
     },
 
     createBoardFunction: function () {
-        const boardCount = document.querySelectorAll(".board")
-        let counter = 0
+        const boardCount = document.querySelectorAll(".board");
+        let counter = 0;
         for (let boardNumber of boardCount) {
             counter += 1;
         }
 
-        const newBoardID = counter + 1
-        const newBoardTitle = `New title ${newBoardID}`
+        const newBoardID = counter + 1;
+        const newBoardTitle = `(new) Board ${newBoardID}`;
 
-        function createNewBoard()
+        function createBoard() {
+            dataHandler.createNewBoard(newBoardID,newBoardTitle,function (parameter) {
+                dom.loadBoards()
+            })
+        }
+
+        let button = document.querySelector(".boards-header");
+        button.addEventListener("click", createBoard)
 
 
     },
