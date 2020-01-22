@@ -25,6 +25,7 @@ def get_boards(cursor):
     """
     cursor.execute("""
     SELECT * FROM boards
+    ORDER BY id ASC 
     """)
     boards = cursor.fetchall()
     return boards
