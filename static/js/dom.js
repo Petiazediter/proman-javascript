@@ -100,11 +100,20 @@ export let dom = {
                 delete_div.setAttribute('class','card-remove');
                 const _i = document.createElement('i');
                 _i.setAttribute('class', 'fas fa-trash-alt');
+                delete_div.setAttribute("data-card-id", data.id);
+                delete_div.addEventListener("click", deleteThisCard);
                 delete_div.appendChild(_i);
                 div.appendChild(delete_div);
                 title_input.onchange = function () {
                     let value = this.value;
                     dataHandler.renameCard(data.id, value);
+                };
+
+                function deleteThisCard() {
+                    let card_id = this.dataset.cardId;
+                    dataHandler.removeCard(card_id, function () {
+                        dom.loadCardsInStatus(data.board_id, status)
+                    });
                 }
             }
         },boardID, status.id)
