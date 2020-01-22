@@ -111,8 +111,8 @@ export let dom = {
             let boardId = board.dataset.id;
 
             function createCard() {
-                dataHandler.createNewCard("new_card", `${boardId}`, 0, function () {
-                    dom.loadCardsInStatus(`${boardId}`,{'id':0})
+                dataHandler.createNewCard("new_card", `${boardId}`, 0, function(parameter) {
+                    dom.loadCardsInStatus(`${boardId}`, {"id": 0});
                 })
             }
             board.addEventListener("click", createCard);

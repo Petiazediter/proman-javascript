@@ -52,7 +52,6 @@ export let dataHandler = {
         });
     },
     getCardsInOrder: function(callback,board_id, status_id){
-
         this._api_get(`/get-cards-by-status/${board_id}/${status_id}`, (response) =>{
             this._data = response;
             callback(response);
@@ -73,12 +72,8 @@ export let dataHandler = {
     createNewCard: function (cardTitle, boardId, statusId,callback) {
         // creates new card, saves it and calls the callback function with its data
 
-        //fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`).then((response) => {callback()})
-        this._api_get(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`, (response) =>{
-            this._data = response;
-            callback();
-        })
-
+        fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`)
+        .then(response => callback(response));
     },
     renameCard: function (cardID,newName) {
         newName = newName.split(' ').join('_');
