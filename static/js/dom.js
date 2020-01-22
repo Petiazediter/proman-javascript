@@ -5,11 +5,18 @@ export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
     },
+
     loadBoards: function () {
         // retrieves boards and makes showBoards called
         dataHandler.getBoards(function(boards){
             let loadingScreen = document.querySelector("#boards");
-            loadingScreen.innerHTML = "";
+            // add new board button instead of loading data
+            loadingScreen.innerHTML =
+                `
+            <div class="boards-header">
+            <button>Add new board</button>
+            </div>`;
+
             dom.showBoards(boards);
         });
     },
@@ -119,6 +126,21 @@ export let dom = {
         }
     },
 
+    createBoardFunction: function () {
+        const boardCount = document.querySelectorAll(".board")
+        let counter = 0
+        for (let boardNumber of boardCount) {
+            counter += 1;
+        }
 
-}
+        const newBoardID = counter + 1
+        const newBoardTitle = `New title ${newBoardID}`
+
+        function createNewBoard()
+
+
+    },
+    // here comes the new dom objects
+
+};
 

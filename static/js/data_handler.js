@@ -68,6 +68,8 @@ export let dataHandler = {
     },
     createNewBoard: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
+        fetch(`http://127.0.0.1:5000/create-new-board/${boardTitle}`)
+        .then(response => callback(response));
     },
     createNewCard: function (cardTitle, boardId, statusId,callback) {
         // creates new card, saves it and calls the callback function with its data
