@@ -56,18 +56,35 @@ def get_cards_for_board(board_id: int):
     return data_handler.get_cards_for_board(board_id)
 
 
-@app.route("/create-new-card", methods=['GET', 'POST'])
-def create_new_card(body):
-    order = data_handler.get_column_order_length(body["board_id"], body["status_id"])
-    data_handler.create_new_card(body["board_id"], body["title"], body["status_id"], order)
-    return True
+@app.route("/create-new-card/<int:board_id>/<int:status_id>/<card_title>")
+@json_response
+def create_new_card(board_id, status_id, card_title):
+    order = data_handler.get_column_order_length(board_id, status_id)
+    event_data = data_handler.create_new_card(board_id, card_title, status_id, order["count"])
+    return event_data
 
 
-@app.route("/create-new-board", methods=['GET', 'POST'])
+@app.route('/rename-card/card-<int:id>/text-<name>')
+@json_response
+def rename_card(id,name):
+    name = name.replace('_', ' ')
+    data_handler.rename_card(id,name)
+    return {}
+
+
+@app.route('/rename-board/board-<int:id>/text-<name>')
+@json_response
+def rename_board(id,name):
+    name = name.replace('_', ' ')
+    data_handler.rename_board(id,name)
+    return {}
+
+
+@app.route("/create-new-board")
 @json_response
 def create_new_board():
     next_board = data_handler.get_board_count + 1
-    data_handler.create_new_board(next_board)
+    return data_handler.create_new_board(next_board)
 
 
 def main():

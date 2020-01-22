@@ -35,13 +35,33 @@ export let dom = {
         boardsContainer.innerHTML += `
             <section class="board" data-id = ${board.id}>
                 <div class="board-header" data-id = ${board.id}>
-                    <span class="board-title">${board.title}</span>
+                    <span class="board-title" data-id = ${board.id}></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
                     <button class="board-toggle" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
 
+        let container;
+        for ( let element of document.getElementsByClassName('board-title')){
+            if (element.dataset.id === `${board.id}`){
+                container = element;
+            }
+        }
+
+        const textBox = document.createElement('input');
+        //<input type="text" value="${board.title}" class="boardName" data-id="${board.id}">
+        textBox.setAttribute('class','boardName');
+        textBox.setAttribute('value',board.title);
+        textBox.dataset.id = board.id;
+        textBox.onchange = function () {
+            console.log('S');
+            let value = this.value;
+            dataHandler.renameBoard(board.id, value);
+        };
+        container.appendChild(textBox);
+
         dom.showStatusesOfBoard(board.id);
+        dom.createCardFunction();
     },
 
     showStatusesOfBoard : function (boardID) {
@@ -50,34 +70,55 @@ export let dom = {
             if ( board.dataset.id == boardID){
                 board.innerHTML += `<div class="board-columns"  id = "columns-${boardID}"></div>`;
                 dataHandler.getStatuses(function (statuses) {
-                    for ( let status of statuses){
+                    for (let status of statuses){
                         document.getElementById(`columns-${boardID}`).innerHTML += `
-
                             <div class="board-column">
                                 <div class="board-column-title">${status.title}</div>
                                 <div class="board-column-content" id="bcc-${status.id}-${boardID}"></div>
-                            </div>      `;
-
-                        dataHandler.getCardsInOrder(function (cardsInOrder) {
-                            const container = document.getElementById(`bcc-${status.id}-${boardID}`);
-                            for (let data of cardsInOrder){
-                                const div = document.createElement("div");
-                                div.setAttribute("class", "card");
-                                const titleDiv = document.createElement("div");
-                                titleDiv.setAttribute("class", "card-title");
-                                const title_input = document.createElement('input');
-                                titleDiv.appendChild(title_input);
-                                title_input.setAttribute( "value",data.title);
-                                //title_input.setAttribute('class', 'board-column-content');
-                                //titleDiv.innerHTML = data.title;
-                                container.appendChild(div);
-                                div.appendChild(titleDiv);
-                            }
-
-                        },boardID, status.id)
+                            </div>`;
+                        dom.loadCardsInStatus(boardID,status);
                     }
-                })
+                });
             }
         }
     },
-};
+
+    loadCardsInStatus: function (boardID,status){
+        dataHandler.getCardsInOrder(function (cardsInOrder) {
+            const container = document.getElementById(`bcc-${status.id}-${boardID}`);
+            container.innerHTML = "";
+            for (let data of cardsInOrder){
+                const div = document.createElement("div");
+                div.setAttribute("class", "card");
+                const titleDiv = document.createElement("div");
+                titleDiv.setAttribute("class", "card-title");
+                const title_input = document.createElement('input');
+                titleDiv.appendChild(title_input);
+                title_input.setAttribute( "value",data.title);
+                container.appendChild(div);
+                div.appendChild(titleDiv);
+                title_input.onchange = function () {
+                    let value = this.value;
+                    dataHandler.renameCard(data.id, value);
+                }
+            }
+        },boardID, status.id)
+    },
+
+    createCardFunction: function () {
+        let allBoardAdds = document.querySelectorAll(".board-add");
+        for (let board of allBoardAdds) {
+            let boardId = board.dataset.id;
+
+            function createCard() {
+                dataHandler.createNewCard("new_card", `${boardId}`, 0, function(parameter) {
+                    dom.loadCardsInStatus(`${boardId}`, {"id": 0});
+                })
+            }
+            board.addEventListener("click", createCard);
+        }
+    },
+
+
+}
+

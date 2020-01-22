@@ -69,14 +69,21 @@ export let dataHandler = {
     createNewBoard: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (cardTitle, boardId, statusId,callback) {
         // creates new card, saves it and calls the callback function with its data
-        let dataBody = {cardTitle, boardId, statusId};
-        this._api_post(`/create-new-card/`, dataBody, (response) => {
-            this._data = response;
-            callback(response);
-        });
 
+        fetch(`http://127.0.0.1:5000/create-new-card/${boardId}/${statusId}/${cardTitle}`)
+        .then(response => callback(response));
+    },
+    renameCard: function (cardID,newName) {
+        newName = newName.split(' ').join('_');
+        //console.log(`/rename-card/card-${cardID}/text-${newName}`);
+        fetch(`http://127.0.0.1:5000/rename-card/card-${cardID}/text-${newName}`)
+    },
+    renameBoard: function (boardID,newName) {
+        console.log('ASD')
+        newName = newName.split(' ').join('_');
+        fetch(`http://127.0.0.1:5000/rename-board/board-${boardID}/text-${newName}`)
     }
     // here comes more features
 };

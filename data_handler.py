@@ -63,6 +63,14 @@ def get_cards_in_order(cursor, board_id):
     cards_in_order = cursor.fetchall()
     return cards_in_order
 
+@connection.connection_handler
+def rename_card(cursor,id,name):
+    cursor.execute("""UPDATE cards SET title = %(new_name)s  WHERE id = %(id)s""",{"new_name":name, 'id':id})
+
+@connection.connection_handler
+def rename_board(cursor,id,name):
+    cursor.execute("""UPDATE boards SET title = %(new_name)s  WHERE id = %(id)s""",{"new_name":name, 'id':id})
+
 
 @connection.connection_handler
 def get_board(cursor, board_id):
@@ -81,8 +89,8 @@ def get_board(cursor, board_id):
 @connection.connection_handler
 def create_new_card(cursor, board_id, title, status_id, order):
     cursor.execute("""
-    INSERT INTO cards(board_id, title, status_id, order)
-    VALUES (%(board_id)s, %(title)s, %(status_id)s, %(order)s)
+    INSERT INTO cards(id, board_id, title, status_id, "order")
+    VALUES (DEFAULT, %(board_id)s, %(title)s, %(status_id)s, %(order)s)
     """, {
         "board_id": board_id,
         "title": title,
