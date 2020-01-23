@@ -79,11 +79,22 @@ def delet_this_card(id):
 
 
 @app.route('/rename-board/board-<int:id>/text-<name>')
+@app.route('/rename-card/card-<int:id>/text-<name>/')
+@json_response
+def rename_card(id,name):
+    name = name.replace('_', ' ')
+    data = data_handler.rename_card(id,name)
+    print(data)
+    return data
+
+
+@app.route('/rename-board/board-<int:id>/text-<name>/')
 @json_response
 def rename_board(id,name):
     name = name.replace('_', ' ')
-    data_handler.rename_board(id,name)
-    return {}
+    board = data_handler.rename_board(id,name)
+    print(board)
+    return board
 
 
 @app.route("/create-new-board/")
