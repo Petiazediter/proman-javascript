@@ -54,12 +54,18 @@ export let dom = {
         dom.createBoardFunction();
 
         console.log(board.id)
-        let inter = setTimeout(function () {
-            document.getElementById(`board-toggle-${board.id}`).addEventListener('click',function () {
+        let inter = setTimeout(dom.addShowHandlers(),1000)
+
+    },
+
+    addShowHandlers : function(){
+        let all_boards = document.getElementsByClassName('board-toggle')
+        for ( let current_board of all_boards){
+            let id = current_board.dataset.id
+            document.getElementById(`board-toggle-${id}`).addEventListener('click',function () {
                 dom.showHide(this)
             })
-        },1000)
-
+        }
     },
     showHide : function(board){
         const boardID = board.dataset.id
