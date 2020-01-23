@@ -89,6 +89,7 @@ export let dataHandler = {
         })
     },
     renameBoard: function (boardID,newName,callback) {
+        console.log(`${boardID} | ${newName}`);
         if (newName == ''){newName = " "}
         this._api_get(`/rename-board/board-${boardID}/text-${newName}/`, (response) =>{
             this._data = response;

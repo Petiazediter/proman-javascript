@@ -55,6 +55,7 @@ export let dom = {
         dom.createBoardFunction();
 
         setTimeout(dom.addShowHandlers(),1000)
+        setTimeout(dom.addRenameBoardHandlers(),1000)
 
     },
 
@@ -67,6 +68,20 @@ export let dom = {
             })
         }
     },
+
+    addRenameBoardHandlers : function() {
+        let elements = document.getElementsByClassName('boardName');
+        for (let element of elements){
+            element.onchange = function () {
+                let value = this.value;
+                dataHandler.renameBoard(this.dataset.boardid, value, function (board) {
+                    let element = document.getElementById(`board-title-${board.id}`);
+                    element.value = board.title
+                });
+            }
+        }
+    },
+
     showHide : function(board){
         const boardID = board.dataset.id
         const element = document.getElementById(`columns-${boardID}`)
@@ -184,19 +199,9 @@ export let dom = {
 
 };
 
-setTimeout(function () {
-    let elements = document.getElementsByClassName('boardName');
-    for (let element of elements){
-        element.onchange = function () {
-            let value = this.value;
-            dataHandler.renameBoard(this.dataset.boardid, value, function (board) {
-                let element = document.getElementById(`board-title-${board.id}`);
-                element.value = board.title
 
-            });
-        }
-    }
-},1000)
+
+
 
 
 
