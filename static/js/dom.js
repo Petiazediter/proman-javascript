@@ -37,6 +37,7 @@ export let dom = {
     // here comes more features
 
     drawBoard: function (board) {
+        console.log("BOARD: " + board)
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.classList.add("board-container");
         boardsContainer.innerHTML += `
@@ -150,14 +151,12 @@ export let dom = {
         function createBoard() {
             dataHandler.createNewBoard(function (parameter) {
                 console.log(parameter)
-                dom.loadBoards();
+                dom.drawBoard(parameter);
             })
         }
 
         let button = document.querySelector(".boards-header");
         button.addEventListener("click", createBoard)
-
-
     },
     // here comes the new dom objects
 
