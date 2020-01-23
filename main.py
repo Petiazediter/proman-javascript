@@ -75,7 +75,6 @@ def delet_this_card(id):
 def rename_card(id,name):
     name = name.replace('_', ' ')
     data = data_handler.rename_card(id,name)
-    print(data)
     return data
 
 
@@ -84,7 +83,6 @@ def rename_card(id,name):
 def rename_board(id,name):
     name = name.replace('_', ' ')
     board = data_handler.rename_board(id,name)
-    print(board)
     return board
 
 
@@ -94,7 +92,6 @@ def create_new_board():
     count = data_handler.get_board_count()
     next_board = int(count) + 1
     return data_handler.create_new_board(next_board)
-
 
 
 def main():

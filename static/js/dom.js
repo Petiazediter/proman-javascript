@@ -13,8 +13,10 @@ export let dom = {
             // add new board button instead of loading data
             loadingScreen.innerHTML =
                 `
-            <div class="boards-header">
-            <button>Add new board</button>
+            <div class="boards-header" ">
+            <button id="create-board">Add new board</button>
+            <button id="expand-all">Expand all</button>
+            <button id="collapse-all">Collapse all</button>
             </div>`;
 
             dom.showBoards(boards);
@@ -37,7 +39,6 @@ export let dom = {
     // here comes more features
 
     drawBoard: function (board) {
-        console.log("BOARD: " + board)
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.classList.add("board-container");
         boardsContainer.innerHTML += `
@@ -53,8 +54,7 @@ export let dom = {
         dom.createCardFunction();
         dom.createBoardFunction();
 
-        console.log(board.id)
-        let inter = setTimeout(dom.addShowHandlers(),1000)
+        setTimeout(dom.addShowHandlers(),1000)
 
     },
 
@@ -156,14 +156,30 @@ export let dom = {
 
         function createBoard() {
             dataHandler.createNewBoard(function (parameter) {
-                console.log(parameter)
                 dom.drawBoard(parameter);
             })
         }
 
-        let button = document.querySelector(".boards-header");
-        button.addEventListener("click", createBoard)
+        function togAll(show){
+            let all_boards = document.getElementsByClassName("board-toggle");
+            for (let current_board of all_boards){
+                let id = current_board.dataset.id;
+                const element = document.getElementById(`columns-${id}`);
+                if (show){
+                    element.style.display = "";
+                } else{
+                    element.style.display = "none"
+                }
+            }
+        }
+
+        document.querySelector("#create-board").addEventListener("click", createBoard);
+        document.querySelector("#expand-all").addEventListener("click", () => togAll(true));
+        document.querySelector("#collapse-all").addEventListener("click", () => togAll(false));
     },
+
+
+
     // here comes the new dom objects
 
 };
@@ -174,11 +190,9 @@ setTimeout(function () {
         element.onchange = function () {
             let value = this.value;
             dataHandler.renameBoard(this.dataset.boardid, value, function (board) {
-                //console.log(board)
-                //console.log(board)
                 let element = document.getElementById(`board-title-${board.id}`);
                 element.value = board.title
-                //console.log('jee ' + board.title)
+
             });
         }
     }
