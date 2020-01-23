@@ -149,6 +149,7 @@ export let dom = {
 
         function createBoard() {
             dataHandler.createNewBoard(function (parameter) {
+                console.log(parameter)
                 dom.loadBoards();
             })
         }

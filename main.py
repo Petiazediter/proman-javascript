@@ -91,8 +91,10 @@ def rename_board(id,name):
 @app.route("/create-new-board/")
 @json_response
 def create_new_board():
-    next_board = data_handler.get_board_count + 1
+    count = data_handler.get_board_count()
+    next_board = int(count) + 1
     return data_handler.create_new_board(next_board)
+
 
 
 def main():

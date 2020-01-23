@@ -145,10 +145,11 @@ def get_cards_by_status(cursor, board_id, status_id):
 @connection.connection_handler
 def get_board_count(cursor):
     cursor.execute("""
-    SELECT count(id) FROM boards;
+    SELECT COUNT(id) FROM boards;
     """)
     board_count = cursor.fetchone()
-    return board_count
+
+    return board_count["count"]
 
 
 @connection.connection_handler
@@ -159,6 +160,15 @@ def create_new_board(cursor, next_one):
     VALUES (%(title)s);
     """,
                    {"title": new_name})
+
+    cursor.execute("""
+    SELECT * FROM boards
+    ORDER BY boards.id DESC
+    LIMIT 1
+    """)
+
+    new_board = cursor.fetchone()
+    return new_board
 
 
 @connection.connection_handler
