@@ -64,21 +64,12 @@ def create_new_card(board_id, status_id, card_title):
     return event_data
 
 
-@app.route('/rename-card/card-<int:id>/text-<name>')
-@json_response
-def rename_card(id,name):
-    name = name.replace('_', ' ')
-    data_handler.rename_card(id,name)
-    return {}
-
-
 @app.route('/delete-card/<int:id>')
 @json_response
 def delet_this_card(id):
     data_handler.delete_card_by_id(id)
 
 
-@app.route('/rename-board/board-<int:id>/text-<name>')
 @app.route('/rename-card/card-<int:id>/text-<name>/')
 @json_response
 def rename_card(id,name):
