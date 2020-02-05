@@ -94,6 +94,15 @@ def create_new_board():
     return data_handler.create_new_board(next_board)
 
 
+@app.route("/delete-board/<int:board_id>")
+@json_response
+def delete_board(board_id):
+    data_handler.delete_cards_by_board_id(board_id)
+    data_handler.delete_board_by_board_id(board_id)
+    return board_id
+
+
+
 def main():
     app.run(debug=True)
 

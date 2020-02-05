@@ -175,7 +175,7 @@ def create_new_board(cursor, next_one):
 def delete_card_by_id(cursor, card_id):
     cursor.execute("""
         DELETE FROM cards
-        WHERE cards.id = %(card_id)s
+        WHERE id = %(card_id)s
     """, {
         "card_id": card_id
     })
