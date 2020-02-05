@@ -175,8 +175,29 @@ def create_new_board(cursor, next_one):
 def delete_card_by_id(cursor, card_id):
     cursor.execute("""
         DELETE FROM cards
-        WHERE id = %(card_id)s
+        WHERE cards.id = %(card_id)s
     """, {
         "card_id": card_id
     })
     return True
+
+
+@connection.connection_handler
+def delete_cards_by_board_id(cursor, board_id):
+    cursor.execute("""
+    DELETE FROM cards
+    WHERE cards.board_id = %(board_id)s;
+    """, {"board_id": board_id})
+
+
+@connection.connection_handler
+def delete_board_by_board_id(cursor, board_id):
+    cursor.execute("""
+    DELETE FROM boards
+    WHERE boards.id = %(board_id)s
+    ;""", {"board_id": board_id})
+
+
+
+
+
