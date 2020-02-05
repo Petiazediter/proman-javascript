@@ -51,10 +51,10 @@ export let dom = {
 
         dom.showStatusesOfBoard(board.id);
         dom.createCardFunction();
-        dom.createBoardFunction();
+        let button = document.querySelector(".boards-header");
+        dom.registerCreateBoardOnClick(button);
 
-        console.log(board.id)
-        let inter = setTimeout(dom.addShowHandlers(),1000)
+        setTimeout(dom.addShowHandlers,1000)
 
     },
 
@@ -152,19 +152,13 @@ export let dom = {
         }
     },
 
-    createBoardFunction: function () {
+    registerCreateBoardOnClick: function (button) {
 
-        function createBoard() {
-            dataHandler.createNewBoard(function (parameter) {
-                console.log(parameter)
-                dom.drawBoard(parameter);
-            })
-        }
 
-        let button = document.querySelector(".boards-header");
-        button.addEventListener("click", createBoard)
+        button.addEventListener("click", () => {
+            dataHandler.createNewBoard(parameter => dom.drawBoard(parameter))
+        })
     },
-    // here comes the new dom objects
 
 };
 
@@ -174,15 +168,13 @@ setTimeout(function () {
         element.onchange = function () {
             let value = this.value;
             dataHandler.renameBoard(this.dataset.boardid, value, function (board) {
-                //console.log(board)
-                //console.log(board)
                 let element = document.getElementById(`board-title-${board.id}`);
                 element.value = board.title
                 //console.log('jee ' + board.title)
             });
         }
     }
-},1000)
+},1000);
 
 
 
