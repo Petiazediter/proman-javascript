@@ -36,7 +36,6 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
-    // here comes more features
 
     drawBoard: function (board) {
         let boardsContainer = document.querySelector('#boards');
@@ -46,6 +45,7 @@ export let dom = {
                 <div class="board-header" data-id = ${board.id}>
                     <span class="board-title" data-id = ${board.id}><input type="text" value="${board.title}" class="boardName" id="board-title-${board.id}" data-boardId="${board.id}"></span>
                     <button class="board-add" data-id = ${board.id}>Add Card</button>
+                    <div class="board-remove" data-id= ${board.id} id="board-remove-${board.id}"><i  class="fas fa-trash-alt"></i></div>
                     <button class="board-toggle" id="board-toggle-${board.id}" data-id = ${board.id}><i class="fas fa-chevron-down"></i></button>
                 </div>
             </section>`;
@@ -54,9 +54,36 @@ export let dom = {
         dom.createCardFunction();
         dom.createBoardFunction();
 
-        setTimeout(dom.addShowHandlers(),1000)
-        setTimeout(dom.addRenameBoardHandlers(),1000)
+        const trashIcon = document.getElementById(`board-remove-${board.id}`);
+        console.log(trashIcon);
 
+        dom.registerDeleteUponClick();
+
+        dom.addShowHandlers();
+        dom.addRenameBoardHandlers();
+
+
+
+    },
+
+
+    deleteThisBoard: function (element){
+            let board_id = element.dataset.id;
+            console.log(board_id);
+
+            dataHandler.removeBoard(board_id, function () {
+                dom.loadBoards()
+            })
+        },
+
+    registerDeleteUponClick: function(){
+        let all_boards = document.getElementsByClassName('board-remove')
+        for ( let current_board of all_boards){
+            let id = current_board.dataset.id;
+            document.getElementById(`board-remove-${id}`).addEventListener('click',function () {
+                dom.deleteThisBoard(this);
+            })
+        }
     },
 
     addShowHandlers : function(){

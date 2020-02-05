@@ -65,11 +65,11 @@ section.board{
     font-size: 20px;
     width:150px;
 }
-.board-title, .board-add, .board-toggle{
+.board-title, .board-add, .board-toggle .board-remove{
     display: inline-block;
 }
 
-.board-toggle{
+.board-toggle, .board-remove{
     float: right;
     margin: 13px;
 }

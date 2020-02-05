@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS public.boards;
 DROP SEQUENCE IF EXISTS public.boards_id_seq;
 CREATE TABLE boards (
     id serial NOT NULL,
-    title varchar(20) unique
+    title varchar(20)
 );
 
 DROP TABLE IF EXISTS public.cards;

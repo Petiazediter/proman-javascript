@@ -153,11 +153,11 @@ def get_board_count(cursor):
 
 
 @connection.connection_handler
-def create_new_board(cursor, next_one):
-    new_name = "(new) Board %s" % next_one
+def create_new_board(cursor):
+    new_name = "(new) Board"
     cursor.execute("""
-    INSERT INTO boards(title)
-    VALUES (%(title)s);
+    INSERT INTO boards(id,title)
+    VALUES (default, %(title)s);
     """,
                    {"title": new_name})
 

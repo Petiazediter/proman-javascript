@@ -89,9 +89,7 @@ def rename_board(id,name):
 @app.route("/create-new-board/")
 @json_response
 def create_new_board():
-    count = data_handler.get_board_count()
-    next_board = int(count) + 1
-    return data_handler.create_new_board(next_board)
+    return data_handler.create_new_board()
 
 
 @app.route("/delete-board/<int:board_id>")
@@ -100,7 +98,6 @@ def delete_board(board_id):
     data_handler.delete_cards_by_board_id(board_id)
     data_handler.delete_board_by_board_id(board_id)
     return board_id
-
 
 
 def main():

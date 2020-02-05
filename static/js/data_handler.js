@@ -100,6 +100,11 @@ export let dataHandler = {
 
         fetch(`http://127.0.0.1:5000/delete-card/${cardID}`)
             .then(response => callback(response));
+    },
+    removeBoard: function (boardID, callback) {
+        fetch(`http://127.0.0.1:5000/delete-board/${boardID}`)
+            .then(response => callback(response));
     }
+
     // here comes more features
 };
